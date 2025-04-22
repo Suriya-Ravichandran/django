@@ -9,11 +9,11 @@ from django.urls import reverse
 
 # index page
 def index(request):
-    return HttpResponse("Hello World, Your at blogs Index")
+    return render(request,"blog/index.html")
 
 # details page
 def detail(request,post_id):
-    return HttpResponse(f"You are viewing Post Details Page. And Id is: {post_id}")
+     return render(request,"blog/detail.html")
 
 # redirection
 
