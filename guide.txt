@@ -1,0 +1,25 @@
+Django Commands:
+
+Create virtual env:
+"python -m venv env"
+
+Activate env:
+"cd env\Script\"
+".\activate"
+
+Installing Django:
+
+"python -m pip install Django"
+
+Verify the Django Version:
+
+"django-admin --version"
+
+Create Django Project:
+
+"django-admin startproject <project-name>"
+
+Run Django Server:
+
+"cd project-folder"
+"python manage.py runserver"
