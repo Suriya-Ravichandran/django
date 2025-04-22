@@ -23,3 +23,6 @@ Run Django Server:
 
 "cd project-folder"
 "python manage.py runserver"
+
+Create Django App:
+"python manage.py startapp <app-name>"
