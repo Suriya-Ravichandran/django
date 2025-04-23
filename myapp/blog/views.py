@@ -10,7 +10,7 @@ from django.urls import reverse
 # index page
 def index(request):
     blog_title="Latest Post"
-    return render(request,"blog/index.html",{'blog_title':blog_title})
+    return render(request,"blog/index.html",{'blog_title':blog_title,})
 
 # details page
 def detail(request,post_id):
