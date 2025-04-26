@@ -26,3 +26,13 @@ Run Django Server:
 
 Create Django App:
 "python manage.py startapp <app-name>"
+
+
+Install Mysql client:
+
+"pip install mysqlclient"
+
+Make migrations:
+
+"python manage.py makemigrations"
+
