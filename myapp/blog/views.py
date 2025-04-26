@@ -4,23 +4,32 @@ from django.http import HttpResponse
 # reverse url
 from django.urls import reverse
 
+# logging
+import logging
 
 # Create your views here.
 
-# index page
-def index(request):
-    blog_title="Latest Post"
-    posts=[
+posts=[
         {"id":1,"title":"Post 1","content":"content of post 1"},
         {"id":2,"title":"Post 2","content":"content of post 2"},
         {"id":3,"title":"Post 3","content":"content of post 3"},
         {"id":4,"title":"Post 4","content":"content of post 4"},
     ]
+
+
+
+
+# index page
+def index(request):
+    blog_title="Latest Post"
     return render(request,"blog/index.html",{'blog_title':blog_title,"posts":posts})
 
 # details page
 def detail(request,post_id):
-     return render(request,"blog/detail.html")
+     post=next((item for item in posts if item["id"] == int(post_id)),None)
+    #  logger=logging.getLogger("testing")
+    #  logger.debug(f"Post variable is {post}")
+     return render(request,"blog/detail.html",{"post":post})
 
 # redirection
 
