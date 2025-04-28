@@ -8,6 +8,9 @@ class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any):
        
+        #  delete existing data
+        Post.objects.all().delete()
+
 
         titles = [
             "The Future of AI",
