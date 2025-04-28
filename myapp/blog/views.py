@@ -12,6 +12,8 @@ from .models import Post
 
 from django.http import Http404
 
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 # static demo data
@@ -28,8 +30,13 @@ from django.http import Http404
 # index page
 def index(request):
     blog_title="Latest Post"
-    posts=Post.objects.all()
-    return render(request,"blog/index.html",{'blog_title':blog_title,"posts":posts})
+    all_posts=Post.objects.all()
+
+    # pagenate
+    pagenator=Paginator(all_posts,6)
+    page_number=request.GET.get("page")
+    page_object=pagenator.get_page(page_number)
+    return render(request,"blog/index.html",{'blog_title':blog_title,"page_obj":page_object})
 
 # details page
 def detail(request,slug):
