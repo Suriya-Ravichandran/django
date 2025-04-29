@@ -9,6 +9,7 @@ import logging
 
 # getting data from post model
 from .models import Post
+from .models import AboutUs
 
 from django.http import Http404
 
@@ -78,4 +79,8 @@ def contact_view(request):
             logger.debug(f"Form validation failure")
         return render(request,"blog/contact.html",{"form":form, "name":name,"email":email,"message":message})
     return render(request,"blog/contact.html")
+
+def about_view(request):
+    about_content = AboutUs.objects.first().content
+    return render(request,"blog/about.html",{"about_content":about_content})
 

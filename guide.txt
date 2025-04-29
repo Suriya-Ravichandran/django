@@ -36,3 +36,7 @@ Make migrations:
 
 "python manage.py makemigrations"
 
+
+Admin Setup
+
+"python manage.py createsuperuser"
