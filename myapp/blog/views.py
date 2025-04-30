@@ -15,8 +15,9 @@ from django.http import Http404
 
 from django.core.paginator import Paginator
 
-from .forms import ContactForm
+from .forms import ContactForm,RegisterForm
 
+from django.contrib import messages
 # Create your views here.
 
 # static demo data
@@ -87,4 +88,16 @@ def about(request):
     else:
         about_content =about_content.content
     return render(request,"blog/about.html",{"about_content":about_content})
+
+def register(request):
+    form =RegisterForm()
+    if request.method == "POST":
+        form =RegisterForm(request.POST)
+        if form.is_valid():
+            user=form.save(commit=False) #create user data
+            user.set_password(form.cleaned_data["password"])
+            user.save()
+            messages.success(request,"Registration successfull")
+    return render(request,"blog/register.html",{"form":form})
+
 

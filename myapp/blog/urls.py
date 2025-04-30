@@ -10,6 +10,6 @@ urlpatterns=[
     path("old_url", views.old_url_redirect, name="old_url"),
     path("contact", views.contact, name="contact"),
     path("about", views.about, name="about"),
-    path("register", views.about, name="register"),
+    path("register", views.register, name="register"),
     
 ]
