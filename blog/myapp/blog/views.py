@@ -15,7 +15,7 @@ from django.http import Http404
 
 from django.core.paginator import Paginator
 
-from .forms import ContactForm,RegisterForm
+from .forms import ContactForm, LoginForm,RegisterForm
 
 from django.contrib import messages
 # Create your views here.
@@ -100,4 +100,9 @@ def register(request):
             messages.success(request,"Registration successfull")
     return render(request,"blog/register.html",{"form":form})
 
+def login(request):
+    if request.method == "POST":
+        form=LoginForm(request.POST)
+        print("login success")
+    return render(request,"blog/login.html",{"form":form})
 

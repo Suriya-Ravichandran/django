@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </head>
+  <body>
+       <div class="container d-flex justify-content-between mt-3">
+        <div><h1>Add book</h1></div>
+        <div><a class="btn btn-primary" href="{% url 'curd:booklist'%}" role="button">Back</a></div>   
+    </div>
+     <div class="container-fluid ">
+        <div class="d-flex justify-content-center mt-5">
+            <div class="d-flex gap-3 flex-column">
+                <h3>Contact Form</h3>
+                <!-- success message -->
+                {% if messages %}
+                    {% for success_message in messages%}
+                    <div class="alert alert-success" role="alert">
+                        {{success_message}}
+                    </div>
+                    {%endfor%}
+                {% endif %}
+
+                <!-- error message -->
+                 {% for field in form %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger" role="alert">
+                           {{field.label_tag}}
+                           {% for error_msg in field.errors %}
+                                {{ error_msg }}
+                           {% endfor %}
+                        </div>
+                    {% endif %}
+                  {% endfor %}
+
+                <form method="post" class="row g-3">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{form.title.value|default:''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="author" class="form-label">Author</label>
+                        <input type="text" class="form-control" id="author" name="author" value="{{form.author.value|default:''}}">
+                    </div>
+                    <div class="col-12">
+                        <label for="message" class="form-label">Published Date</label>
+                        <input type="date" name="published_date" id="published_date">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Add book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  </body>
+</html>

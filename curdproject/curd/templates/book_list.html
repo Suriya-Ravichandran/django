@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container d-flex justify-content-between mt-3">
+        <div><h1>Book lists</h1></div>
+        <div><a class="btn btn-primary" href="{% url 'curd:addbook'%}" role="button">Add Book</a></div>   
+    </div>
+
+    <div class="container mt-3">
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Published Date</th>
+            <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if books %}
+            {% for book in books %}
+            <tr>
+            <th scope="row">{{book.id}}</th>
+            <td>{{book.title}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.published_date}}</td>
+            <td>
+                <a class="btn btn-warning" href="{% url 'curd:updatebook' pk=book.id %}" role="button">Update</a>
+                <a class="btn btn-danger" href="{% url 'curd:deletebook' pk=book.id%}" role="button">delete</a>
+            </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <p>No Books founded</p>
+            {% endif %}
+        </tbody>
+        </table>
+
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  </body>
+</html>
