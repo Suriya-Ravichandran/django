@@ -40,7 +40,7 @@
             <td>{{product.productprice}}</td>
             <td>{{product.productdist}}</td>
             <td>
-                <a href="" class="btn btn-warning">Update</a>
+                <a href="{% url 'curd:updateproduct' pk=product.id%}" class="btn btn-warning">Update</a>
                 <a href="" class="btn btn-danger">Delete</a>
             </td>
             </tr>

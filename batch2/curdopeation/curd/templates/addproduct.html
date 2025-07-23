@@ -16,7 +16,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between">
             <div class="title">
-                <h1>Add Product</h1>
+                <h1>{{title}}</h1>
             </div>
             <div class="backbtn">
                 <a href="{% url 'curd:productlist' %}" class="btn btn-danger">Back to Dashbord</a>
@@ -53,10 +53,10 @@
                             <input type="text" class="form-control" placeholder="Product Discount" aria-label="productdist" aria-describedby="basic-addon1" name="productdist" value="{{form.productdist.value|default:''}}">
                     </div>
                     <div class="input-group">
-                        <textarea class="form-control" aria-label="With textarea" placeholder="Product Description" name="description" value="{{form.description.value|default:''}}"></textarea>
+                        <textarea class="form-control" aria-label="With textarea" placeholder="Product Description" name="description">{{form.description.value|default:''}}</textarea>
                     </div>
                     <div class="input-group mt-4">
-                            <button type="submit" class="btn btn-primary"> Add product</button>
+                            <button type="submit" class="btn btn-primary"> {{title}}</button>
                     </div>
                </form>
             </div>
