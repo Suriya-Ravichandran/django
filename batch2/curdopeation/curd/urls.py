@@ -6,6 +6,7 @@ app_name="curd"
 urlpatterns = [
     path("",views.productlist,name="productlist"),
     path("addproduct",views.addproduct,name="addproduct"),
-    path("updateproduct/<int:pk>",views.updateproduct,name="updateproduct")
+    path("updateproduct/<int:pk>",views.updateproduct,name="updateproduct"),
+    path("deleteproduct/<int:pk>",views.deleteproduct,name="deleteproduct")
 
 ]

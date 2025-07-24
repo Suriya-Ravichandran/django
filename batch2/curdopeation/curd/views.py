@@ -4,15 +4,17 @@ from .forms import ProductFrom
 # Create your views here.
 
 def productlist(request):
+    title="Product List"
     products=Product.objects.all()
     context={
-        "products":products
+        "products":products,
+        "title":title,
     }
     return render(request,"index.html",context)
 
 def addproduct(request):
     title="Add Product"
-    form =ProductFrom(request.POST or None)
+    form =ProductFrom(request.POST or None,request.FILES or None)
     if form.is_valid():
         form.save()
         return redirect('curd:productlist')
@@ -26,8 +28,13 @@ def addproduct(request):
 def updateproduct(request,pk):
     title="Update Product"
     product=get_object_or_404(Product,pk=pk)
-    form =ProductFrom(request.POST or None,instance=product)
+    form = ProductFrom(request.POST or None, request.FILES or None, instance=product)
     if form.is_valid():
         form.save()
         return redirect('curd:productlist')
     return render(request,'addproduct.html',{"title":title,"form":form})
+
+def deleteproduct(request,pk):
+    product=get_object_or_404(Product,pk=pk)
+    product.delete()
+    return redirect('curd:productlist')
