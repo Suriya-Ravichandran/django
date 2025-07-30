@@ -6,7 +6,7 @@ class ProductFrom(forms.ModelForm):
     productprice=forms.CharField(max_length=100,required=True)
     productdist=forms.CharField(max_length=100,required=True)
     description=forms.CharField(max_length=500,required=True)
-
+    quantity = forms.CharField(max_length=100, required=True)
     class Meta:
         model = Product
-        fields = ['productname', 'productprice', 'productdist','description','image']
+        fields = ['productname', 'productprice', 'productdist','description','quantity', 'category','image']
