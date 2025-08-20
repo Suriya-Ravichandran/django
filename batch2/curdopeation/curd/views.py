@@ -1,8 +1,16 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Product,Category
-from .forms import ProductFrom
+from .models import Product,Category,User
+from .forms import ProductFrom,SignupForm,SigninForm,ForgotPasswordForm
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib import messages
+from django.contrib.auth import authenticate,login as signin,logout
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 # Create your views here.
 
 def productlist(request):
@@ -57,3 +65,60 @@ def deleteproduct(request,slug):
     product=get_object_or_404(Product,slug=slug)
     product.delete()
     return redirect('curd:productlist')
+
+
+def login(request):
+    form=SigninForm()
+    if request.method== 'POST':
+        form= SigninForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username,password=password)
+            print(user)
+            if user is not None:
+                signin(request,user)
+                return redirect("curd:productlist")
+            print("login success")
+    return render(request,'login.html',{"form":form})
+
+def signup(request):
+    form=SignupForm()
+    if request.method == "POST":
+        form=SignupForm(request.POST)
+        if form.is_valid():
+            user=form.save(commit=False) #create user data
+            user.set_password(form.cleaned_data["password"])
+            user.save()
+            messages.success(request,"Registration successfull")
+    return render(request,'signup.html',{"form":form})
+
+
+def signout(request):
+    logout(request)
+    return redirect("curd:login")
+
+def forgot_password(request):
+    form=ForgotPasswordForm()
+    if request.method == 'POST':
+        form=ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            email=form.cleaned_data['email']
+            user=User.objects.get(email=email)
+            token=default_token_generator.make_token(user)
+            uid=urlsafe_base64_encode(force_bytes(user.pk))
+            current_site=get_current_site(request)
+            domain= current_site.domain
+            subject="Reset Password Requested"
+            message=render_to_string("reset_password_email.html",{
+                "domain":domain,
+                "uid":uid,
+                "token":token
+            })
+
+            send_mail(subject,message,'info@gocosys.com',[email])
+            messages.success(request,"Email has been sent")
+    return render(request,'forgotpassword.html')
+
+def resetpassword(request,uidb64,token):
+    pass
