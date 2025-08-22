@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Product,Category,User
-from .forms import ProductFrom,SignupForm,SigninForm,ForgotPasswordForm
+from .forms import ProductFrom,SignupForm,SigninForm,ForgotPasswordForm,ResetPasswordForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib import messages
@@ -121,4 +121,22 @@ def forgot_password(request):
     return render(request,'forgotpassword.html')
 
 def resetpassword(request,uidb64,token):
-    pass
+     form=ResetPasswordForm()
+     if request.method =='POST':
+         form=ResetPasswordForm(request.POST)
+         if form.is_valid():
+             new_password =form.cleaned_data['password']
+             try:
+                uid=urlsafe_base64_decode(uidb64)
+                user=User.objects.get(pk=uid)
+             except(TypeError,ValueError,OverflowError,User.DoesNotExist):
+                user=None
+             if user is not None and default_token_generator.check_token(user,token):
+                user.set_password(new_password)
+                user.save()
+                messages.success(request,"Your Password Has been Reset Successfully!")
+                return redirect("curd:login")
+             else:
+                 messages.error(request,"The Password reset link is invaild")
+
+     return render(request,'resetpassword.html',{"form":form})
